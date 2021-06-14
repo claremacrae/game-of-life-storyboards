@@ -8,11 +8,16 @@ using namespace ApprovalTests;
 
 class GameOfLife
 {
+    std::function<int(int, int)> function_;
 
 public:
+    GameOfLife(std::function<int(int x, int y)> function) : function_(function)
+    {
+    }
+
     std::string printCell(int x, int y)
     {
-        return ".";
+        return function_(x, y) ? "X" : ".";
     }
 
     std::string print(int width, int height)
@@ -47,7 +52,7 @@ void verifySequence(std::string initialFrame,
 
 TEST_CASE("Demo Sequence")
 {
-    GameOfLife game;
+    GameOfLife game([](int x, int y) { return 1 <= x && x <= 3 && y == 2; });
     verifySequence(
         game.print(5, 5), 5, [&](int frame) { return game.print(5, 5); });
 }
