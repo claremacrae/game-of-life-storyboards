@@ -1,0 +1,93 @@
+name: build
+
+on:
+  push:
+    branches:
+      - '*'
+  pull_request:
+    branches:
+      - '*'
+
+jobs:
+  clang-format:
+    runs-on: ubuntu-18.04
+    steps:
+      - uses: actions/checkout@master
+      - uses: DoozyX/clang-format-lint-action@v0.5
+        with:
+          source: '.'
+          exclude: './lib'
+          clangFormatVersion: 9
+  build:
+    env:
+      BUILD_PATH: ${{ github.workspace }}/${{ matrix.relative_build_dir_path }}build_space
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+        - job-name: windows-latest
+          os: windows-latest
+          generator: '"Visual Studio 16 2019"'
+          relative_build_dir_path: ''
+
+        - job-name: windows-latest (clangcl)
+          os: windows-latest
+          generator: '"Visual Studio 16 2019" -T "clangcl"'
+          relative_build_dir_path: ''
+
+        - job-name: windows-2016
+          os: windows-2016
+          generator: '"Visual Studio 15 2017"'
+          relative_build_dir_path: ''
+
+        - job-name: ubuntu-18.04
+          os: ubuntu-18.04
+          generator: '"Unix Makefiles"'
+          relative_build_dir_path: ''
+
+        - job-name: ubuntu-18.04-ninja
+          os: ubuntu-18.04
+          generator: '"Ninja"'
+          relative_build_dir_path: '../'
+
+        - job-name:  macOS-latest
+          os: macOS-latest
+          generator: '"Unix Makefiles"'
+          relative_build_dir_path: ''
+
+        - job-name:  macOS-latest-unity
+          os: macOS-latest
+          generator: '"Unix Makefiles" -DCMAKE_UNITY_BUILD=yes'
+          relative_build_dir_path: ''
+
+        - job-name:  macOS-latest-ninja
+          os: macOS-latest
+          generator: '"Ninja"'
+          relative_build_dir_path: '../'
+
+        - job-name:  macOS-latest-ninja-unity
+          os: macOS-latest
+          generator: '"Ninja" -DCMAKE_UNITY_BUILD=yes'
+          relative_build_dir_path: ''
+    runs-on: ${{ matrix.os }}
+    name: ${{ matrix.job-name }}
+    steps:
+    - uses: actions/checkout@master
+    - uses: seanmiddleditch/gha-setup-ninja@v3
+      if: contains(matrix.generator, 'Ninja')
+
+    - name: configure
+      run: |
+        mkdir ${{ env.BUILD_PATH }}
+        cd ${{ env.BUILD_PATH }}
+        cmake --version
+        cmake -G ${{ matrix.generator }} ${{ github.workspace }} -DCMAKE_BUILD_TYPE=Debug
+    - name: build
+      run: |
+        cd ${{ env.BUILD_PATH }}
+        cmake --build . --parallel 4
+    - name: test
+      run: |
+        cd ${{ env.BUILD_PATH }}
+        ctest --verbose --output-on-failure -C Debug
+
