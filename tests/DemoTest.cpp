@@ -6,32 +6,34 @@
 
 using namespace ApprovalTests;
 
-TEST_CASE("DemoSimpleTestCase")
+class GameOfLife
 {
-    Approvals::verify("Some\nMulti-line\noutput");
-}
 
-struct Demo
-{
-    int value1;
-    int value2;
-
-    // See https://github.com/approvals/ApprovalTests.cpp/blob/master/doc/ToString.md#top
-    friend std::ostream& operator<<(std::ostream& os, const Demo& obj)
+public:
+    std::string print(int width, int height)
     {
-        return os << "value1: " << obj.value1 << ", value2: " << obj.value2;
+        return ". . . . .";
     }
 };
 
-TEST_CASE("DemoCombinationTestCase")
+void verifySequence(std::string initialFrame,
+                    int numberOfFrames,
+                    std::function<std::string(int)> function)
 {
-    // See https://github.com/approvals/ApprovalTests.cpp/blob/master/doc/TestingCombinations.md#top
-    std::vector<int> evens{2, 4, 6, 8, 10};
-    std::vector<int> odds{1, 3, 5, 7, 9};
-    CombinationApprovals::verifyAllCombinations(
-        [](int i, int j) {
-            return Demo{i, j};
-        },
-        evens,
-        odds);
+    std::stringstream s;
+    s << "Initial Frame:\n";
+    s << initialFrame << "\n\n";
+    for (int frame = 1; frame <= numberOfFrames; ++frame)
+    {
+        s << "Frame #" << frame << ":\n";
+        s << function(frame) << "\n\n";
+    }
+    Approvals::verify(s.str());
+}
+
+TEST_CASE("Demo Sequence")
+{
+    GameOfLife game;
+    verifySequence(
+        game.print(5, 5), 5, [&](int frame) { return game.print(5, 5); });
 }
