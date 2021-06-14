@@ -10,9 +10,23 @@ class GameOfLife
 {
 
 public:
+    std::string printCell(int x, int y)
+    {
+        return ".";
+    }
+
     std::string print(int width, int height)
     {
-        return ". . . . .";
+        std::stringstream s;
+        for (int y = 0; y < width; ++y)
+        {
+            for (int x = 0; x < height; ++x)
+            {
+                s << printCell(x, y) << " ";
+            }
+            s << '\n';
+        }
+        return s.str();
     }
 };
 
