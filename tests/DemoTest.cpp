@@ -28,16 +28,19 @@ class StoryBoard
 private:
     std::stringstream s;
     int frameCount = 0;
+    bool addNewLine = false;
 public:
     StoryBoard& addDescription(std::string description)
     {
-        s << description << "\n\n";
+        s << description << "\n";
+        addNewLine = true;
         return *this;
     }
 
     StoryBoard& addDescriptionWithData(std::string description, std::string data)
     {
-        s << description << ": " << data << "\n\n";
+        s << description << ": " << data << "\n";
+        addNewLine = true;
         return *this;
     }
 
@@ -55,6 +58,11 @@ public:
 
     StoryBoard& addFrame(std::string title, std::string frame)
     {
+        if (addNewLine)
+        {
+            s << '\n';
+            addNewLine = false;
+        }
         s << title << ":\n";
         s << frame << "\n\n";
         frameCount += 1;
@@ -129,6 +137,8 @@ TEST_CASE("Other Story Board Mechanisms")
 
     story.addDescriptionWithData("setting alive", "*");
     game.setAliveCell("*");
+    story.addDescriptionWithData("setting dead", "_");
+    game.setDeadCell("_");
     game = game.advance();
     story.addFrame(game.print(5, 5));
 
