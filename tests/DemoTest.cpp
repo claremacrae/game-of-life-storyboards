@@ -11,46 +11,46 @@ using namespace ApprovalTests;
 class StoryBoard
 {
 private:
-    std::stringstream s;
-    int frameCount = 0;
-    bool addNewLine = false;
+    std::stringstream output_;
+    int frameCount_ = 0;
+    bool addNewLineBeforeNextFrame_ = false;
 public:
     StoryBoard& addDescription(std::string description)
     {
-        s << description << "\n";
-        addNewLine = true;
+        output_ << description << "\n";
+        addNewLineBeforeNextFrame_ = true;
         return *this;
     }
 
     StoryBoard& addDescriptionWithData(std::string description, std::string data)
     {
-        s << description << ": " << data << "\n";
-        addNewLine = true;
+        output_ << description << ": " << data << "\n";
+        addNewLineBeforeNextFrame_ = true;
         return *this;
     }
 
     StoryBoard& addFrame(std::string frame)
     {
-        if (frameCount == 0)
+        if (frameCount_ == 0)
         {
             return addFrame("Initial Frame", frame);
         }
         else
         {
-            return addFrame("Frame #" + std::to_string(frameCount), frame);
+            return addFrame("Frame #" + std::to_string(frameCount_), frame);
         }
     }
 
     StoryBoard& addFrame(std::string title, std::string frame)
     {
-        if (addNewLine)
+        if (addNewLineBeforeNextFrame_)
         {
-            s << '\n';
-            addNewLine = false;
+            output_ << '\n';
+            addNewLineBeforeNextFrame_ = false;
         }
-        s << title << ":\n";
-        s << frame << "\n\n";
-        frameCount += 1;
+        output_ << title << ":\n";
+        output_ << frame << "\n\n";
+        frameCount_ += 1;
         return *this;
     }
 
@@ -67,7 +67,7 @@ public:
 
     friend std::ostream& operator<<(std::ostream& os, const StoryBoard& board)
     {
-        os << board.s.str();
+        os << board.output_.str();
         return os;
     }
 
