@@ -17,7 +17,6 @@ void verifySequence(std::string initialFrame,
     s << initialFrame << "\n\n";
     for (int frame = 1; frame <= numberOfFrames; ++frame)
     {
-        std::cout << s.str() << std::endl;
         s << "Frame #" << frame << ":\n";
         s << function(frame) << "\n\n";
     }
