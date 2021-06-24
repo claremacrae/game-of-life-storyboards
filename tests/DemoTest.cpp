@@ -120,10 +120,8 @@ TEST_CASE("Other Story Board Mechanisms")
     game = game.advance();
     story.addFrame(game.print(5, 5));
 
-    story.addDescriptionWithData("setting alive", "*");
-    game.setAliveCell("*");
-    story.addDescriptionWithData("setting dead", "_");
-    game.setDeadCell("_");
+    story.addDescriptionWithData("setting alive", game.setAliveCell("*"));
+    story.addDescriptionWithData("setting dead", game.setDeadCell("_"));
     game = game.advance();
     story.addFrame(game.print(5, 5));
 

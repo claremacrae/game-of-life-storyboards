@@ -81,13 +81,15 @@ public:
         return newGame;
     }
 
-    void setAliveCell(std::string alive)
+    std::string setAliveCell(std::string alive)
     {
         aliveCharacter = alive;
+        return aliveCharacter;
     }
 
-    void setDeadCell(std::string dead)
+    std::string setDeadCell(std::string dead)
     {
         deadCharacter = dead;
+        return deadCharacter;
     }
 };
