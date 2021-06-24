@@ -3,6 +3,7 @@ set(CMAKE_CXX_STANDARD 14)
 set(SOURCE_FILES
         main.cpp
         DemoTest.cpp
+        GameOfLife.h
         NewTest.cpp
         Tutorial.cpp)
 add_executable(${TEST_NAME} ${SOURCE_FILES})
