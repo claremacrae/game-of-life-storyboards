@@ -33,14 +33,18 @@ public:
     {
         if (frameCount == 0)
         {
-            s << "Initial Frame:\n";
-            s << frame << "\n\n";
+            return add("Initial Frame", frame);
         }
         else
         {
-            s << "Frame #" << frameCount << ":\n";
-            s << frame << "\n\n";
+            return add("Frame #" + std::to_string(frameCount), frame);
         }
+    }
+
+    StoryBoard& add(std::string title, std::string frame)
+    {
+        s << title << ":\n";
+        s << frame << "\n\n";
         frameCount += 1;
         return *this;
     }
@@ -95,4 +99,24 @@ TEST_CASE("Demo Sequence")
         }
         Approvals::verify(story);
     }
+}
+
+TEST_CASE("Other Story Board Mechanisms")
+{
+    GameOfLife game([](int x, int y) { return 1 <= x && x <= 3 && y == 2; });
+
+    StoryBoard story;
+
+    story.add(game.print(5, 5));
+    game = game.advance();
+    story.add("Start game", game.print(5, 5));
+    game = game.advance();
+    story.add(game.print(5, 5));
+    game = game.advance();
+    story.add(game.print(5, 5));
+    game = game.advance();
+    story.add(game.print(5, 5));
+    game = game.advance();
+    story.add(game.print(5, 5));
+    Approvals::verify(story);
 }
