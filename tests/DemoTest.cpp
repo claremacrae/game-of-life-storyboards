@@ -23,13 +23,76 @@ void verifySequence(std::string initialFrame,
     Approvals::verify(s.str());
 }
 
+class StoryBoard
+{
+private:
+    std::stringstream s;
+    int frameCount = 0;
+public:
+    StoryBoard& add(std::string frame)
+    {
+        if (frameCount == 0)
+        {
+            s << "Initial Frame:\n";
+            s << frame << "\n\n";
+        }
+        else
+        {
+            s << "Frame #" << frameCount << ":\n";
+            s << frame << "\n\n";
+        }
+        frameCount += 1;
+        return *this;
+    }
+
+    StoryBoard& addFrames(
+                    int numberOfFrames,
+                    std::function<std::string(int)> function)
+    {
+        for (int frame = 1; frame <= numberOfFrames; ++frame)
+        {
+            add(function(frame));
+        }
+        return *this;
+    }
+
+    friend std::ostream& operator<<(std::ostream& os, const StoryBoard& board)
+    {
+        os << board.s.str();
+        return os;
+    }
+
+};
+
 TEST_CASE("Demo Sequence")
 {
-    GameOfLife game([](int x, int y) { return 1 <= x && x <= 3 && y == 2; });
-    GameOfLife lastGame = game;
-    verifySequence(
-        game.print(5, 5), 5, [&](int frame) {
-            lastGame = lastGame.advance();
-            return lastGame.print(5, 5);
-        });
+    {
+        GameOfLife game([](int x, int y)
+                        { return 1 <= x && x <= 3 && y == 2; });
+        GameOfLife lastGame = game;
+
+        Approvals::verify(StoryBoard()
+                              .add(game.print(5, 5))
+                              .addFrames(5,
+                                         [&](int frame)
+                                         {
+                                             lastGame = lastGame.advance();
+                                             return lastGame.print(5, 5);
+                                         }));
+    }
+
+    {
+        GameOfLife game([](int x, int y)
+                        { return 1 <= x && x <= 3 && y == 2; });
+
+        StoryBoard story;
+
+        story.add(game.print(5, 5));
+        for (int i = 0; i < 5; ++i)
+        {
+            game = game.advance();
+            story.add(game.print(5, 5));
+        }
+        Approvals::verify(story);
+    }
 }
