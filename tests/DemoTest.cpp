@@ -119,19 +119,24 @@ TEST_CASE("Other Story Board Mechanisms")
 
     StoryBoard story;
     story.addDescription("Game of Life");
-
     story.addFrame(game.print(5, 5));
+
     game = game.advance();
     story.addFrame("Start game", game.print(5, 5));
+
     game = game.advance();
     story.addFrame(game.print(5, 5));
-    game = game.advance();
+
     story.addDescriptionWithData("setting alive", "*");
     game.setAliveCell("*");
-    story.addFrame(game.print(5, 5));
     game = game.advance();
     story.addFrame(game.print(5, 5));
+
     game = game.advance();
     story.addFrame(game.print(5, 5));
+
+    game = game.advance();
+    story.addFrame(game.print(5, 5));
+
     Approvals::verify(story);
 }
