@@ -29,6 +29,12 @@ private:
     std::stringstream s;
     int frameCount = 0;
 public:
+    StoryBoard& addDescription(std::string description)
+    {
+        s << description << "\n\n";
+        return *this;
+    }
+
     StoryBoard& addFrame(std::string frame)
     {
         if (frameCount == 0)
@@ -106,6 +112,7 @@ TEST_CASE("Other Story Board Mechanisms")
     GameOfLife game([](int x, int y) { return 1 <= x && x <= 3 && y == 2; });
 
     StoryBoard story;
+    story.addDescription("Game of Life");
 
     story.addFrame(game.print(5, 5));
     game = game.advance();
