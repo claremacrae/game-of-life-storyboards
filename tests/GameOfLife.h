@@ -8,6 +8,7 @@
 class GameOfLife
 {
     std::vector<std::string> aliveCells;
+    std::string aliveCharacter = "X";
 
 public:
     GameOfLife(std::function<int(int x, int y)> function)
@@ -38,7 +39,7 @@ public:
 
     std::string printCell(int x, int y) const
     {
-        return isAlive(x, y) ? "X" : ".";
+        return isAlive(x, y) ? aliveCharacter : ".";
     }
 
     std::string print(int width, int height) const
@@ -73,6 +74,14 @@ public:
                 this->isAlive(x + 1, y + 1);
             return count == 3 || (count == 2 && this->isAlive(x, y));
         };
-        return GameOfLife(function2);
+        auto newGame = GameOfLife(function2);
+        newGame.setAliveCell(aliveCharacter);
+        return newGame;
     }
+
+    void setAliveCell(std::string alive)
+    {
+        aliveCharacter = alive;
+    }
+
 };

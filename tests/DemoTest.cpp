@@ -35,6 +35,12 @@ public:
         return *this;
     }
 
+    StoryBoard& addDescriptionWithData(std::string description, std::string data)
+    {
+        s << description << ": " << data << "\n\n";
+        return *this;
+    }
+
     StoryBoard& addFrame(std::string frame)
     {
         if (frameCount == 0)
@@ -120,6 +126,8 @@ TEST_CASE("Other Story Board Mechanisms")
     game = game.advance();
     story.addFrame(game.print(5, 5));
     game = game.advance();
+    story.addDescriptionWithData("setting alive", "*");
+    game.setAliveCell("*");
     story.addFrame(game.print(5, 5));
     game = game.advance();
     story.addFrame(game.print(5, 5));
