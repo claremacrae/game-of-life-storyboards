@@ -57,7 +57,6 @@ public:
 
     GameOfLife advance()
     {
-//        auto function1 = function_;
         std::function<int(int, int)> function2 = [this](int x, int y)
         {
             int count =
@@ -74,8 +73,6 @@ public:
                 this->isAlive(x + 1, y + 1);
             return count == 3 || (count == 2 && this->isAlive(x, y));
         };
-        std::cout << "advance" << std::endl;
-        //        function_ = function2;
         return GameOfLife(function2);
     }
 };

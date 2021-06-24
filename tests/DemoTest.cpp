@@ -31,7 +31,6 @@ TEST_CASE("Demo Sequence")
     verifySequence(
         game.print(5, 5), 5, [&](int frame) {
             lastGame = lastGame.advance();
-//            return "Hi";
             return lastGame.print(5, 5);
         });
 }
