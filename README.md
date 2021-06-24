@@ -3,6 +3,7 @@
 [![Build Status](../../workflows/build/badge.svg?branch=master)](../../actions?query=branch%3Amaster+workflow%3Abuild)
 [![Build Status](../../workflows/build_vs/badge.svg?branch=master)](../../actions?query=branch%3Amaster+workflow%3Abuild_vs)
 
+A demo of using Approval Tests for sequences of outputs...
 
 This is a starter project for:
 
@@ -31,10 +32,7 @@ Notes:
 
 * For more information, see the [ApprovalTests.cpp User Guide](https://github.com/approvals/ApprovalTests.cpp/blob/master/doc/README.md#top)
 * You will need a Diff tool.
-* Suggestions: 
+* Suggestions:
     * Mac: [DiffMerge](https://sourcegear.com/diffmerge/)
     * Windows: [WinMerge](winmerge.org/)
     * Linux: [meld](http://meldmerge.org/)
-
-
-
