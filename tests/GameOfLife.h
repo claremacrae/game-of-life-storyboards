@@ -24,7 +24,7 @@ public:
         }
     }
 
-    bool isAlive(int x, int y)
+    bool isAlive(int x, int y) const
     {
         return (std::find(aliveCells.begin(),
                           aliveCells.end(),
@@ -36,12 +36,12 @@ public:
         return std::to_string(x) + "," + std::to_string(y);
     }
 
-    std::string printCell(int x, int y)
+    std::string printCell(int x, int y) const
     {
         return isAlive(x, y) ? "X" : ".";
     }
 
-    std::string print(int width, int height)
+    std::string print(int width, int height) const
     {
         std::stringstream s;
         for (int y = 0; y < width; ++y)
@@ -55,7 +55,7 @@ public:
         return s.str();
     }
 
-    GameOfLife advance()
+    GameOfLife advance() const
     {
         std::function<int(int, int)> function2 = [this](int x, int y)
         {
