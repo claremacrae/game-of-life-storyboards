@@ -29,19 +29,19 @@ private:
     std::stringstream s;
     int frameCount = 0;
 public:
-    StoryBoard& add(std::string frame)
+    StoryBoard& addFrame(std::string frame)
     {
         if (frameCount == 0)
         {
-            return add("Initial Frame", frame);
+            return addFrame("Initial Frame", frame);
         }
         else
         {
-            return add("Frame #" + std::to_string(frameCount), frame);
+            return addFrame("Frame #" + std::to_string(frameCount), frame);
         }
     }
 
-    StoryBoard& add(std::string title, std::string frame)
+    StoryBoard& addFrame(std::string title, std::string frame)
     {
         s << title << ":\n";
         s << frame << "\n\n";
@@ -55,7 +55,7 @@ public:
     {
         for (int frame = 1; frame <= numberOfFrames; ++frame)
         {
-            add(function(frame));
+            addFrame(function(frame));
         }
         return *this;
     }
@@ -76,7 +76,7 @@ TEST_CASE("Demo Sequence")
         GameOfLife lastGame = game;
 
         Approvals::verify(StoryBoard()
-                              .add(game.print(5, 5))
+                              .addFrame(game.print(5, 5))
                               .addFrames(5,
                                          [&](int frame)
                                          {
@@ -91,11 +91,11 @@ TEST_CASE("Demo Sequence")
 
         StoryBoard story;
 
-        story.add(game.print(5, 5));
+        story.addFrame(game.print(5, 5));
         for (int i = 0; i < 5; ++i)
         {
             game = game.advance();
-            story.add(game.print(5, 5));
+            story.addFrame(game.print(5, 5));
         }
         Approvals::verify(story);
     }
@@ -107,16 +107,16 @@ TEST_CASE("Other Story Board Mechanisms")
 
     StoryBoard story;
 
-    story.add(game.print(5, 5));
+    story.addFrame(game.print(5, 5));
     game = game.advance();
-    story.add("Start game", game.print(5, 5));
+    story.addFrame("Start game", game.print(5, 5));
     game = game.advance();
-    story.add(game.print(5, 5));
+    story.addFrame(game.print(5, 5));
     game = game.advance();
-    story.add(game.print(5, 5));
+    story.addFrame(game.print(5, 5));
     game = game.advance();
-    story.add(game.print(5, 5));
+    story.addFrame(game.print(5, 5));
     game = game.advance();
-    story.add(game.print(5, 5));
+    story.addFrame(game.print(5, 5));
     Approvals::verify(story);
 }
