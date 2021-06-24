@@ -8,21 +8,6 @@
 
 using namespace ApprovalTests;
 
-void verifySequence(std::string initialFrame,
-                    int numberOfFrames,
-                    std::function<std::string(int)> function)
-{
-    std::stringstream s;
-    s << "Initial Frame:\n";
-    s << initialFrame << "\n\n";
-    for (int frame = 1; frame <= numberOfFrames; ++frame)
-    {
-        s << "Frame #" << frame << ":\n";
-        s << function(frame) << "\n\n";
-    }
-    Approvals::verify(s.str());
-}
-
 class StoryBoard
 {
 private:
