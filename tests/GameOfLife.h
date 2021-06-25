@@ -61,6 +61,7 @@ public:
     {
         std::function<int(int, int)> function2 = [this](int x, int y)
         {
+            // clang-format off
             int count =
                 this->isAlive(x - 1, y - 1) +
                 this->isAlive(x - 1, y - 0) +
@@ -73,6 +74,7 @@ public:
                 this->isAlive(x + 1, y - 1) +
                 this->isAlive(x + 1, y - 0) +
                 this->isAlive(x + 1, y + 1);
+            // clang-format on
             return count == 3 || (count == 2 && this->isAlive(x, y));
         };
         auto newGame = GameOfLife(function2);
