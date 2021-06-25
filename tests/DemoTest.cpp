@@ -75,15 +75,14 @@ TEST_CASE("Demo Sequence")
     {
         GameOfLife game([](int x, int y)
                         { return 1 <= x && x <= 3 && y == 2; });
-        GameOfLife lastGame = game;
 
         Approvals::verify(StoryBoard()
                               .addFrame(game.print(5, 5))
                               .addFrames(5,
                                          [&](int frame)
                                          {
-                                             lastGame = lastGame.advance();
-                                             return lastGame.print(5, 5);
+                                             game = game.advance();
+                                             return game.print(5, 5);
                                          }));
     }
 
