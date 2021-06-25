@@ -16,22 +16,22 @@ private:
     bool addNewLineBeforeNextFrame_ = false;
 
 public:
-    StoryBoard& addDescription(std::string description)
+    StoryBoard& addDescription(const std::string& description)
     {
         output_ << description << "\n";
         addNewLineBeforeNextFrame_ = true;
         return *this;
     }
 
-    StoryBoard& addDescriptionWithData(std::string description,
-                                       std::string data)
+    StoryBoard& addDescriptionWithData(const std::string& description,
+                                       const std::string& data)
     {
         output_ << description << ": " << data << "\n";
         addNewLineBeforeNextFrame_ = true;
         return *this;
     }
 
-    StoryBoard& addFrame(std::string frame)
+    StoryBoard& addFrame(const std::string& frame)
     {
         if (frameCount_ == 0)
         {
@@ -43,7 +43,7 @@ public:
         }
     }
 
-    StoryBoard& addFrame(std::string title, std::string frame)
+    StoryBoard& addFrame(const std::string& title, const std::string& frame)
     {
         if (addNewLineBeforeNextFrame_)
         {
@@ -57,7 +57,7 @@ public:
     }
 
     StoryBoard& addFrames(int numberOfFrames,
-                          std::function<std::string(int)> function)
+                          const std::function<std::string(int)>& function)
     {
         for (int frame = 1; frame <= numberOfFrames; ++frame)
         {
