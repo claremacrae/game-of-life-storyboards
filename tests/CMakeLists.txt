@@ -1,4 +1,4 @@
-set(TEST_NAME StarterProject.tests)
+set(TEST_NAME storyboards-tests)
 set(CMAKE_CXX_STANDARD 14)
 set(SOURCE_FILES
         main.cpp
