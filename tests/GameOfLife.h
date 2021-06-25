@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <ostream>
+#include <utility>
 #include "catch2/catch.hpp"
 #include "ApprovalTests.hpp"
 #include "GameOfLife.h"
@@ -85,13 +86,13 @@ public:
 
     std::string setAliveCell(std::string alive)
     {
-        aliveCharacter = alive;
+        aliveCharacter = std::move(alive);
         return aliveCharacter;
     }
 
     std::string setDeadCell(std::string dead)
     {
-        deadCharacter = dead;
+        deadCharacter = std::move(dead);
         return deadCharacter;
     }
 };
