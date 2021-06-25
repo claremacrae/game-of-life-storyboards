@@ -33,7 +33,7 @@ public:
                           printCoordinate(x, y)) != aliveCells.end());
     }
 
-    std::string printCoordinate(int x, int y) const
+    static std::string printCoordinate(int x, int y)
     {
         return std::to_string(x) + "," + std::to_string(y);
     }
