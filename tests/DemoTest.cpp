@@ -14,6 +14,7 @@ private:
     std::stringstream output_;
     int frameCount_ = 0;
     bool addNewLineBeforeNextFrame_ = false;
+
 public:
     StoryBoard& addDescription(std::string description)
     {
@@ -22,7 +23,8 @@ public:
         return *this;
     }
 
-    StoryBoard& addDescriptionWithData(std::string description, std::string data)
+    StoryBoard& addDescriptionWithData(std::string description,
+                                       std::string data)
     {
         output_ << description << ": " << data << "\n";
         addNewLineBeforeNextFrame_ = true;
@@ -54,9 +56,8 @@ public:
         return *this;
     }
 
-    StoryBoard& addFrames(
-                    int numberOfFrames,
-                    std::function<std::string(int)> function)
+    StoryBoard& addFrames(int numberOfFrames,
+                          std::function<std::string(int)> function)
     {
         for (int frame = 1; frame <= numberOfFrames; ++frame)
         {
@@ -70,7 +71,6 @@ public:
         os << board.output_.str();
         return os;
     }
-
 };
 
 TEST_CASE("Demo Sequence")
