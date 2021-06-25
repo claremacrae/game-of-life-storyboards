@@ -9,15 +9,6 @@ on:
       - '*'
 
 jobs:
-  clang-format:
-    runs-on: ubuntu-18.04
-    steps:
-      - uses: actions/checkout@master
-      - uses: DoozyX/clang-format-lint-action@v0.5
-        with:
-          source: '.'
-          exclude: './lib'
-          clangFormatVersion: 9
   build:
     env:
       BUILD_PATH: ${{ github.workspace }}/${{ matrix.relative_build_dir_path }}build_space
