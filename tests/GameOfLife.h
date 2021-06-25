@@ -13,7 +13,7 @@ class GameOfLife
     std::string deadCharacter = ".";
 
 public:
-    explicit GameOfLife(std::function<int(int x, int y)> function)
+    explicit GameOfLife(const std::function<int(int x, int y)>& function)
     {
         for (int x = -1; x <= 6; ++x)
         {
