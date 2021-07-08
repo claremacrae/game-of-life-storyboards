@@ -6,9 +6,29 @@
 #include "catch2/catch.hpp"
 #include "ApprovalTests.hpp"
 #include "GameOfLife.h"
+
+struct Point
+{
+    Point(int x, int y) : x_(x), y_(y)
+    {
+    }
+
+    bool operator==(const Point& rhs) const
+    {
+        return x_ == rhs.x_ && y_ == rhs.y_;
+    }
+
+    bool operator!=(const Point& rhs) const
+    {
+        return !(rhs == *this);
+    }
+    int x_;
+    int y_;
+};
+
 class GameOfLife
 {
-    std::vector<std::string> aliveCells;
+    std::vector<Point> aliveCells;
     std::string aliveCharacter = "X";
     std::string deadCharacter = ".";
 
@@ -21,7 +41,7 @@ public:
             {
                 if (function(x, y))
                 {
-                    aliveCells.push_back(printCoordinate(x, y));
+                    aliveCells.push_back(Point(x, y));
                 }
             }
         }
@@ -31,12 +51,7 @@ public:
     {
         return (std::find(aliveCells.begin(),
                           aliveCells.end(),
-                          printCoordinate(x, y)) != aliveCells.end());
-    }
-
-    static std::string printCoordinate(int x, int y)
-    {
-        return std::to_string(x) + "," + std::to_string(y);
+                          Point(x, y)) != aliveCells.end());
     }
 
     std::string printCell(int x, int y) const
