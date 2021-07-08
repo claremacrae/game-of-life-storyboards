@@ -44,6 +44,12 @@ public:
                 points.push_back(point);
             }
         }
+        *this = GameOfLife(function, points);
+    }
+
+    GameOfLife(const std::function<int(int, int)>& function,
+               std::vector<Point>& points)
+    {
         for (const auto& point : points)
         {
             if (function(point.x_, point.y_))
