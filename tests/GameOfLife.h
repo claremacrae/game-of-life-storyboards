@@ -81,6 +81,10 @@ public:
         }
     }
 
+    explicit GameOfLife(std::vector<Point>& alivePoints) : aliveCells(alivePoints)
+    {
+    }
+
     bool isAlive(int x, int y) const
     {
         return (std::find(aliveCells.begin(),

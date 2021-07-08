@@ -133,31 +133,36 @@ TEST_CASE("Other Story Board Mechanisms")
 TEST_CASE("Demo 15-step blinker")
 {
     {
+        std::vector<Point> alive = {
+            Point(1,1),
+            Point(2,1),
+            Point(3,1),
+            Point(1,2),
+//            Point(2,2),
+            Point(3,2),
+            Point(1,3),
+            Point(2,3),
+            Point(3,3),
+            Point(1,4),
+            Point(2,4),
+            Point(3,4),
+            Point(1,5),
+            Point(2,5),
+            Point(3,5),
+            Point(1,6),
+            Point(2,6),
+            Point(3,6),
+            Point(1,7),
+//            Point(2,7),
+            Point(3,7),
+            Point(1,8),
+            Point(2,8),
+            Point(3,8),
+        };
+        GameOfLife game(alive);
+
         int width = 10;
         int height = 10;
-        GameOfLife game(
-            10, 10,
-            [](int x, int y)
-            {
-                if (x < 1 || x > 3)
-                {
-                    return false;
-                }
-                if (y < 1 || y > 8)
-                {
-                    return false;
-                }
-                if (x == 2 && y == 2)
-                {
-                    return false;
-                }
-                if (x == 2 && y == 7)
-                {
-                    return false;
-                }
-                return true;
-            });
-
         Approvals::verify(StoryBoard()
                               .addFrame(game.print(width, height))
                               .addFrames(15,
