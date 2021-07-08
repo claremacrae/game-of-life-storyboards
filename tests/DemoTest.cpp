@@ -129,3 +129,42 @@ TEST_CASE("Other Story Board Mechanisms")
 
     Approvals::verify(story);
 }
+
+TEST_CASE("Demo 15-step blinker")
+{
+    {
+        int width = 10;
+        int height = 10;
+        GameOfLife game(
+            10, 10,
+            [](int x, int y)
+            {
+                if (x < 1 || x > 3)
+                {
+                    return false;
+                }
+                if (y < 1 || y > 8)
+                {
+                    return false;
+                }
+                if (x == 2 && y == 2)
+                {
+                    return false;
+                }
+                if (x == 2 && y == 7)
+                {
+                    return false;
+                }
+                return true;
+            });
+
+        Approvals::verify(StoryBoard()
+                              .addFrame(game.print(width, height))
+                              .addFrames(15,
+                                         [&](int frame)
+                                         {
+                                             game = game.advance();
+                                             return game.print(width, height);
+                                         }));
+    }
+}
