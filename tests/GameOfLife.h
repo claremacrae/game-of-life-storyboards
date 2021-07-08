@@ -48,6 +48,25 @@ struct Point
     int y_;
 };
 
+class Grid
+{
+public:
+    static std::string
+    print(int width, int height, std::function<void(int, int, std::ostream&)> printCell)
+    {
+        std::stringstream s;
+        for (int y = 0; y < height; ++y)
+        {
+            for (int x = 0; x < width; ++x)
+            {
+                printCell(x, y, s);
+            }
+            s << '\n';
+        }
+        return s.str();
+    }
+};
+
 class GameOfLife
 {
     std::vector<Point> aliveCells;
@@ -126,16 +145,10 @@ public:
 
     std::string print(int width, int height) const
     {
-        std::stringstream s;
-        for (int y = 0; y < height; ++y)
-        {
-            for (int x = 0; x < width; ++x)
-            {
-                s << printCell(x, y) << " ";
-            }
-            s << '\n';
-        }
-        return s.str();
+        return Grid::print(width, height, [&](int x, int y, std::ostream& s){
+                               s << printCell(x, y) << " ";
+        });
+
     }
 
     std::vector<Point> getRelevantPoints() const
