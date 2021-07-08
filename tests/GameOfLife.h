@@ -85,6 +85,33 @@ public:
     {
     }
 
+    explicit GameOfLife(const std::string& cells)
+    {
+        int x = 0;
+        int y = 0;
+        for (const auto& item : cells)
+        {
+            if ( item == ' ')
+            {
+                continue;
+            }
+            if ( item == '\n')
+            {
+                if(!(x == 0 && y == 0))
+                {
+                    x = 0;
+                    y += 1;
+                }
+                continue;
+            }
+            if ( item == 'X')
+            {
+                aliveCells.push_back(Point(x, y));
+            }
+            x += 1;
+        }
+    }
+
     bool isAlive(int x, int y) const
     {
         return (std::find(aliveCells.begin(),

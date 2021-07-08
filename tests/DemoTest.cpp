@@ -172,4 +172,31 @@ TEST_CASE("Demo 15-step blinker")
                                              return game.print(width, height);
                                          }));
     }
+
+    {
+        auto alive = R"(
+. . . . . . . . . .
+. X X X . . . . . .
+. X . X . . . . . .
+. X X X . . . . . .
+. X X X . . . . . .
+. X X X . . . . . .
+. X X X . . . . . .
+. X . X . . . . . .
+. X X X . . . . . .)";
+
+        GameOfLife game(alive);
+
+        int width = 10;
+        int height = 10;
+        Approvals::verify(StoryBoard()
+                              .addFrame(game.print(width, height))
+                              .addFrames(15,
+                                         [&](int frame)
+                                         {
+                                             game = game.advance();
+                                             return game.print(width, height);
+                                         }));
+    }
 }
+
