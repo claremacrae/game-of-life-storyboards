@@ -73,7 +73,7 @@ public:
 TEST_CASE("Demo Sequence")
 {
     {
-        GameOfLife game([](int x, int y)
+        GameOfLife game(5, 5, [](int x, int y)
                         { return 1 <= x && x <= 3 && y == 2; });
 
         Approvals::verify(StoryBoard()
@@ -87,7 +87,7 @@ TEST_CASE("Demo Sequence")
     }
 
     {
-        GameOfLife game([](int x, int y)
+        GameOfLife game(5, 5, [](int x, int y)
                         { return 1 <= x && x <= 3 && y == 2; });
 
         StoryBoard story;
@@ -104,7 +104,7 @@ TEST_CASE("Demo Sequence")
 
 TEST_CASE("Other Story Board Mechanisms")
 {
-    GameOfLife game([](int x, int y) { return 1 <= x && x <= 3 && y == 2; });
+    GameOfLife game(5, 5, [](int x, int y) { return 1 <= x && x <= 3 && y == 2; });
 
     StoryBoard story;
     story.addDescription("Game of Life");

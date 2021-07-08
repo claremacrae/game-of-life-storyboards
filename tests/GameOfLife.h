@@ -55,12 +55,12 @@ class GameOfLife
     std::string deadCharacter = ".";
 
 public:
-    explicit GameOfLife(const std::function<int(int, int)>& function)
+    explicit GameOfLife(int width, int height, const std::function<int(int, int)>& function)
     {
         std::vector<Point> points;
-        for (int x = -1; x <= 6; ++x)
+        for (int x = 0; x <= width; ++x)
         {
-            for (int y = -1; y <= 6; ++y)
+            for (int y = 0; y <= height; ++y)
             {
                 const Point point = Point(x, y);
                 points.push_back(point);
