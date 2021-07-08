@@ -35,15 +35,20 @@ class GameOfLife
 public:
     explicit GameOfLife(const std::function<int(int, int)>& function)
     {
+        std::vector<Point> points;
         for (int x = -1; x <= 6; ++x)
         {
             for (int y = -1; y <= 6; ++y)
             {
                 const Point point = Point(x, y);
-                if (function(x, y))
-                {
-                    aliveCells.push_back(point);
-                }
+                points.push_back(point);
+            }
+        }
+        for (const auto& point : points)
+        {
+            if (function(point.x_, point.y_))
+            {
+                aliveCells.push_back(point);
             }
         }
     }
