@@ -3,6 +3,7 @@
 #include <iostream>
 #include <ostream>
 #include <utility>
+#include <set>
 #include "catch2/catch.hpp"
 #include "ApprovalTests.hpp"
 #include "GameOfLife.h"
@@ -21,6 +22,27 @@ struct Point
     bool operator!=(const Point& rhs) const
     {
         return !(rhs == *this);
+    }
+
+    bool operator<(const Point& rhs) const
+    {
+        if (x_ < rhs.x_)
+            return true;
+        if (rhs.x_ < x_)
+            return false;
+        return y_ < rhs.y_;
+    }
+    bool operator>(const Point& rhs) const
+    {
+        return rhs < *this;
+    }
+    bool operator<=(const Point& rhs) const
+    {
+        return !(rhs < *this);
+    }
+    bool operator>=(const Point& rhs) const
+    {
+        return !(*this < rhs);
     }
     int x_;
     int y_;
@@ -85,6 +107,24 @@ public:
         return s.str();
     }
 
+    std::vector<Point> getRelevantPoints() const
+    {
+        std::set<Point> points;
+        for (const auto& item : aliveCells)
+        {
+            points.insert(Point(item.x_ - 1, item.y_ - 1));
+            points.insert(Point(item.x_ - 1, item.y_ - 0));
+            points.insert(Point(item.x_ - 1, item.y_ + 1));
+            points.insert(Point(item.x_ - 0, item.y_ - 1));
+            points.insert(Point(item.x_ - 0, item.y_ - 0));
+            points.insert(Point(item.x_ - 0, item.y_ + 1));
+            points.insert(Point(item.x_ + 1, item.y_ - 1));
+            points.insert(Point(item.x_ + 1, item.y_ - 0));
+            points.insert(Point(item.x_ + 1, item.y_ + 1));
+        }
+        return std::vector<Point>(points.begin(), points.end());
+    }
+
     GameOfLife advance() const
     {
         std::function<int(int, int)> function2 = [this](int x, int y)
@@ -105,7 +145,8 @@ public:
             // clang-format on
             return count == 3 || (count == 2 && this->isAlive(x, y));
         };
-        auto newGame = GameOfLife(function2);
+        auto points = getRelevantPoints();
+        auto newGame = GameOfLife(function2, points);
         newGame.setAliveCell(aliveCharacter);
         newGame.setDeadCell(deadCharacter);
         return newGame;
