@@ -127,9 +127,9 @@ public:
     std::string print(int width, int height) const
     {
         std::stringstream s;
-        for (int y = 0; y < width; ++y)
+        for (int y = 0; y < height; ++y)
         {
-            for (int x = 0; x < height; ++x)
+            for (int x = 0; x < width; ++x)
             {
                 s << printCell(x, y) << " ";
             }

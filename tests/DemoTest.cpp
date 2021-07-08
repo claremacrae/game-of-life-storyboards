@@ -132,37 +132,39 @@ TEST_CASE("Other Story Board Mechanisms")
 
 TEST_CASE("Demo 15-step blinker")
 {
+    int width = 11;
+    int height = 18;
     {
+        int x = 3;
+        int y = 4;
         std::vector<Point> alive = {
-            Point(1,1),
-            Point(2,1),
-            Point(3,1),
-            Point(1,2),
-//            Point(2,2),
-            Point(3,2),
-            Point(1,3),
-            Point(2,3),
-            Point(3,3),
-            Point(1,4),
-            Point(2,4),
-            Point(3,4),
-            Point(1,5),
-            Point(2,5),
-            Point(3,5),
-            Point(1,6),
-            Point(2,6),
-            Point(3,6),
-            Point(1,7),
-//            Point(2,7),
-            Point(3,7),
-            Point(1,8),
-            Point(2,8),
-            Point(3,8),
+            Point(x + 1,y + 1),
+            Point(x + 2,y + 1),
+            Point(x + 3,y + 1),
+            Point(x + 1,y + 2),
+//            Point(x + 2,y + 2),
+            Point(x + 3,y + 2),
+            Point(x + 1,y + 3),
+            Point(x + 2,y + 3),
+            Point(x + 3,y + 3),
+            Point(x + 1,y + 4),
+            Point(x + 2,y + 4),
+            Point(x + 3,y + 4),
+            Point(x + 1,y + 5),
+            Point(x + 2,y + 5),
+            Point(x + 3,y + 5),
+            Point(x + 1,y + 6),
+            Point(x + 2,y + 6),
+            Point(x + 3,y + 6),
+            Point(x + 1,y + 7),
+//            Point(x + 2,y + 7),
+            Point(x + 3,y + 7),
+            Point(x + 1,y + 8),
+            Point(x + 2,y + 8),
+            Point(x + 3,y + 8),
         };
         GameOfLife game(alive);
 
-        int width = 10;
-        int height = 10;
         Approvals::verify(StoryBoard()
                               .addFrame(game.print(width, height))
                               .addFrames(15,
@@ -175,20 +177,22 @@ TEST_CASE("Demo 15-step blinker")
 
     {
         auto alive = R"(
-. . . . . . . . . .
-. X X X . . . . . .
-. X . X . . . . . .
-. X X X . . . . . .
-. X X X . . . . . .
-. X X X . . . . . .
-. X X X . . . . . .
-. X . X . . . . . .
-. X X X . . . . . .)";
+. . . . . . . .
+. . . . . . . .
+. . . . . . . .
+. . . . . . . .
+. . . . . . . .
+. . . . X X X .
+. . . . X . X .
+. . . . X X X .
+. . . . X X X .
+. . . . X X X .
+. . . . X X X .
+. . . . X . X .
+. . . . X X X . )";
 
         GameOfLife game(alive);
 
-        int width = 10;
-        int height = 10;
         Approvals::verify(StoryBoard()
                               .addFrame(game.print(width, height))
                               .addFrames(15,
