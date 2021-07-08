@@ -39,9 +39,10 @@ public:
         {
             for (int y = -1; y <= 6; ++y)
             {
+                const Point point = Point(x, y);
                 if (function(x, y))
                 {
-                    aliveCells.push_back(Point(x, y));
+                    aliveCells.push_back(point);
                 }
             }
         }
